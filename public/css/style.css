@@ -1,0 +1,247 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.qlwa {
+
+    padding: 20px;
+}
+
+.tappa {
+    margin-bottom: 20px;
+}
+
+.tappa img {
+    width: 100%;
+}
+
+/* Input Styles */
+.input-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 1px solid #333;
+    /* Dark border like image */
+    border-radius: 0;
+    /* Square corners */
+    color: #222222;
+    /* Placeholder color */
+    outline: none;
+    box-sizing: border-box;
+    margin-top: 15px;
+}
+
+input::placeholder {
+    color: #ccc;
+}
+
+input:disabled {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+/* Keypad Layout */
+.keypad-wrapper {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.key-btn {
+    aspect-ratio: 1;
+    background-color: white;
+    border: 1px solid #afafaf;
+    border-radius: 2px;
+    font-size: 1.7rem;
+    color: #484848;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: background-color 0.2s;
+    margin-top: 0;
+    font-weight: 400;
+}
+
+.key-btn:active {
+    background-color: #f0f0f0;
+}
+
+/* Backspace Button */
+.backspace-btn {
+    width: 60px;
+    /* Or match grid column width */
+    border: 1px solid #999;
+    border-radius: 2px;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+.backspace-icon {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #333;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* OTP Styles */
+.otp-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.otp-input {
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    font-size: 1.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    margin-top: 0;
+    /* Reset margin from general input rule */
+}
+
+.pt2 .otp-input {
+    height: 50px;
+}
+
+.otp-input:focus {
+    border-color: #007bff;
+    /* Highlight color */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/*  */
+
+.pp1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.pp2 {
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pp4 {
+    margin-top: 45px;
+}
+
+.pp5 {
+    margin-top: 20px;
+    margin-bottom: -18px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    background-color: #16a0aa;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+.indx-inp input {
+    height: 40px;
+}
+
+/*  */
+.f-cc {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Loader Styles */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.spinner {
+    animation: rotate 2s linear infinite;
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+.path {
+    stroke: #1bbbc6;
+    /* Match button color */
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+.loader-text {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 500;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+
+.firm-op input {
+    font-size: 14px;
+    padding: 5px;
+}

